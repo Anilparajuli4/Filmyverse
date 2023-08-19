@@ -14,12 +14,14 @@
     "@emotion/styled": "^11.11.0",
     "@mui/icons-material": "^5.14.3",
     "@mui/material": "^5.14.5",
+    "firebase": "^10.2.0",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-loader-spinner": "^5.3.4",
     "react-router-dom": "^6.15.0",
     "react-stars": "^2.2.5",
-    "sweet-alert": "^2.0.5"
+    "sweet-alert": "^2.0.5",
+    "sweetalert": "^2.1.2"
   },
   "devDependencies": {
     "@types/react": "^18.2.15",
