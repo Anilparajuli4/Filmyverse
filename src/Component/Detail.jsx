@@ -4,6 +4,7 @@ import { useParams } from "react-router-dom";
 import ReactStars from "react-stars";
 import { db } from "../firebase/Firebase";
 import { Bars } from "react-loader-spinner";
+import Review from "./Review";
 function Detail() {
   const { id } = useParams();
   const [data, setData] = useState({
@@ -11,6 +12,8 @@ function Detail() {
     year: "",
     image: "",
     description: "",
+    rating: "",
+    rated: 0,
   });
   const [loading, setLoading] = useState(false);
 
@@ -43,8 +46,14 @@ function Detail() {
               {data.title}
               <span className="text-xl">({data.year})</span>
             </h1>
-            <ReactStars size={20} half={true} value={5} edit={false} />
+            <ReactStars
+              size={20}
+              half={true}
+              value={data.rating / data.rated}
+              edit={false}
+            />
             <p className="mt-2 ">{data.description}</p>
+            <Review id={id} prevRating={data.rating} userRated={data.rated} />
           </div>
         </>
       )}

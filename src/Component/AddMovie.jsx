@@ -9,6 +9,8 @@ function AddMovie() {
     year: "",
     description: "",
     image: "",
+    rated: 0,
+    rating: 0,
   });
   const [loading, setLoading] = useState(false);
   async function addMovie() {
@@ -22,6 +24,12 @@ function AddMovie() {
         timer: 300,
       });
       setLoading(false);
+      setForm({
+        title: "",
+        year: "",
+        description: "",
+        image: "",
+      });
     } catch (error) {
       swal({
         title: error,

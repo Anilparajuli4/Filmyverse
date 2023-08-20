@@ -49,7 +49,12 @@ function Card() {
                 </h1>
                 <div className="flex items-center">
                   <span className="text-gray-500 mr-1">Rating:</span>
-                  <ReactStars size={20} half={true} value={5} edit={false} />
+                  <ReactStars
+                    size={20}
+                    half={true}
+                    value={item.rating / item.rated}
+                    edit={false}
+                  />
                 </div>
                 <p>
                   <span className="text-gray-500">Year:</span> {year}
