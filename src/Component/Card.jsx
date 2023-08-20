@@ -3,6 +3,7 @@ import ReactStars from "react-stars";
 import { Audio, ThreeDots } from "react-loader-spinner";
 import { getDocs } from "firebase/firestore";
 import { movieRef } from "../firebase/Firebase";
+import { Link } from "react-router-dom";
 
 function Card() {
   const [data, setData] = useState([]);
@@ -15,7 +16,7 @@ function Card() {
         const _data = await getDocs(movieRef);
 
         _data.forEach((doc) => {
-          setData((prev) => [...prev, doc.data()]);
+          setData((prev) => [...prev, { ...doc.data(), id: doc.id }]);
           setLoading(false);
         });
       } catch (error) {
@@ -29,7 +30,7 @@ function Card() {
   return (
     <div className="flex flex-wrap justify-between px-3 mt-2 ">
       {loading ? (
-        <div className="flex w-full h-96 justify-center items-center">
+        <div className="flex w-full h-96 justify-center items-center ">
           <ThreeDots height={40} color="white" />
         </div>
       ) : (
@@ -37,22 +38,24 @@ function Card() {
           const { title, year, image } = item;
 
           return (
-            <div
-              key={i}
-              className="card  shadow-lg p-2 hover:-translate-y-3 cursor-pointer  mt-6 transition-all duration-500"
-            >
-              <img className="h-60 md:h-72" src={image} alt={name} />
-              <h1>
-                <span className="text-gray-500">name:</span> {title}
-              </h1>
-              <div className="flex items-center">
-                <span className="text-gray-500 mr-1">Rating:</span>
-                <ReactStars size={20} half={true} value={5} edit={false} />
+            <Link to={`/detail/${item.id}`} key={i}>
+              <div
+                key={i}
+                className="card  shadow-lg p-2 hover:-translate-y-3 cursor-pointer  mt-6 transition-all duration-500"
+              >
+                <img className="h-60 md:h-72" src={image} alt={name} />
+                <h1>
+                  <span className="text-gray-500">name:</span> {title}
+                </h1>
+                <div className="flex items-center">
+                  <span className="text-gray-500 mr-1">Rating:</span>
+                  <ReactStars size={20} half={true} value={5} edit={false} />
+                </div>
+                <p>
+                  <span className="text-gray-500">Year:</span> {year}
+                </p>
               </div>
-              <p>
-                <span className="text-gray-500">Year:</span> {year}
-              </p>
-            </div>
+            </Link>
           );
         })
       )}
