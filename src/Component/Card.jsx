@@ -28,7 +28,7 @@ function Card() {
   }, []);
 
   return (
-    <div className="flex flex-wrap justify-between px-3 mt-2 ">
+    <div className="flex flex-wrap justify-between px-3  w-full  mt-2 ">
       {loading ? (
         <div className="flex w-full h-96 justify-center items-center ">
           <ThreeDots height={40} color="white" />

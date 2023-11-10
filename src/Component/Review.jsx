@@ -11,19 +11,28 @@ import {
 } from "firebase/firestore";
 import { TailSpin, ThreeDots } from "react-loader-spinner";
 import swal from "sweetalert";
+import { UserAuth } from "./ContextApi";
+import { useNavigate } from "react-router-dom";
 function Review({ id, prevRating, userRated }) {
   const [rating, setRating] = useState(0);
   const [loading, setLoading] = useState(false);
   const [reviewsLoading, setReviewsLoading] = useState(false);
-  const [form, setForm] = useState();
+  const [form, setForm] = useState("");
   const [data, setData] = useState([]);
+  const [newAdded, setNewAdded] = useState(0);
+  const { user } = UserAuth();
+  const navigate = useNavigate();
+  // const newUser = user.displayName;
 
   async function sendReview() {
     setLoading(true);
+    if (!user) {
+      navigate("/login");
+    }
     try {
       await addDoc(reviewsRef, {
         movieId: id,
-        name: "anil parajuli",
+        name: user.displayName,
         rating: rating,
         thought: form,
         timeStamp: new Date().getTime(),
@@ -35,6 +44,7 @@ function Review({ id, prevRating, userRated }) {
       });
       setRating(0);
       setForm("");
+      setNewAdded(newAdded + 1);
       swal({
         title: "Review Sent",
         icon: "success",
@@ -65,7 +75,7 @@ function Review({ id, prevRating, userRated }) {
       setReviewsLoading(false);
     }
     getData();
-  }, []);
+  }, [newAdded]);
   return (
     <div className="mt-4 border-t-2 border-gray-700 w-full">
       <ReactStars

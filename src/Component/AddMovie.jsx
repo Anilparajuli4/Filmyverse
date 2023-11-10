@@ -3,6 +3,7 @@ import { TailSpin } from "react-loader-spinner";
 import { addDoc } from "firebase/firestore";
 import { movieRef } from "../firebase/Firebase";
 import swal from "sweetalert";
+import { toast } from "react-toastify";
 function AddMovie() {
   const [form, setForm] = useState({
     title: "",
@@ -30,6 +31,7 @@ function AddMovie() {
         description: "",
         image: "",
       });
+      toast.success("new movie added successfully");
     } catch (error) {
       swal({
         title: error,
@@ -38,6 +40,7 @@ function AddMovie() {
         timer: 300,
       });
       setLoading(false);
+      toast.error(error);
     }
   }
   return (
@@ -63,6 +66,7 @@ function AddMovie() {
                     type="text"
                     id="name"
                     name="name"
+                    required
                     value={form.title}
                     onChange={(e) =>
                       setForm({ ...form, title: e.target.value })
@@ -81,6 +85,7 @@ function AddMovie() {
                   </label>
                   <input
                     type="email"
+                    required
                     id="email"
                     name="email"
                     value={form.year}
@@ -100,6 +105,7 @@ function AddMovie() {
                   <input
                     id="message"
                     name="message"
+                    required
                     value={form.image}
                     onChange={(e) =>
                       setForm({ ...form, image: e.target.value })
@@ -120,6 +126,7 @@ function AddMovie() {
                     id="message"
                     name="message"
                     value={form.description}
+                    required
                     onChange={(e) =>
                       setForm({ ...form, description: e.target.value })
                     }

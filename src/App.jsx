@@ -3,30 +3,47 @@ import Card from "./Component/Card";
 import Detail from "./Component/Detail";
 import Header from "./Component/Header";
 import { Route, Routes } from "react-router-dom";
-import { createContext, useContext, useState } from "react";
+import { useState } from "react";
 import LogIn from "./Component/LogIn";
 import SignUp from "./Component/SignUp";
-
-const AppState = createContext();
+import { UserContextProvider } from "./Component/ContextApi";
+import ProtectedRoute from "./Component/ProtectedRoute";
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 function App() {
-  const [login, setLogin] = useState(false);
-  const [userName, setUserName] = useState("");
   return (
-    <AppState.Provider value={{ login, userName, setUserName, setLogin }}>
+    <UserContextProvider>
       <div className="App relative">
         <Header />
         <Routes>
           <Route path="/" element={<Card />} />
-          <Route path="/add-movie" element={<AddMovie />} />
+          <Route
+            path="/add-movie"
+            element={
+              <ProtectedRoute>
+                <AddMovie />
+              </ProtectedRoute>
+            }
+          />
           <Route path="/detail/:id" element={<Detail />} />
           <Route path="/login" element={<LogIn />} />
           <Route path="/sign-up" element={<SignUp />} />
         </Routes>
+        <ToastContainer
+          position="bottom-center"
+          autoClose={5000}
+          hideProgressBar={false}
+          newestOnTop={false}
+          closeOnClick
+          rtl={false}
+          pauseOnFocusLoss
+          draggable
+          pauseOnHover
+        />
       </div>
-    </AppState.Provider>
+    </UserContextProvider>
   );
 }
 
-export { AppState };
 export default App;
